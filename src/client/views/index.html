@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Travel Planner</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@100;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.scss">
+</head>
+<div class ="holderheadline">
+    Your Travel Planner
+  </div>
+ <body>
+  <div class ="chooseTrip">
+    <label for="myTrip"> CHOOSE YOUR TRIP</label>
+    <div class="inline"><input type="text" id="place" placeholder="I want to go to..."></div>
+    <div class="inline"><input type="text" id="date" placeholder="01 . 01 . 2020"></div>
+    <div class="inline"><button class="inline" id="generate" type = "submit"> Send my trip </button></div>
+  </div>
+    <div class ="holder feel">
+    <label for="feelings">My trip to : </label>
+    <!-- <textarea class= "myInput" id="myTrip" placeholder="Enter your feelings here" rows="9" cols="50"></textarea> -->
+    <div class = resumTrip>
+      <div id="imageReceived"></div>
+      <div id="resume">
+        <div id = "placeGenerate"></div> 
+        <div id = "dateGenerate"></div>
+        <div id = "responseS"></div>
+        <div class="inline"><button type = "submit"> Save Trip </button></div>
+        <div class="inline"><button type = "submit"> Remove Trip </button></div>
+      </div>
+    </div>
+    <!-- <button id="generate" type = "submit"> Generate </button> -->
+  </div>
+
+   <div id = "entryHolder">
+ <!--    <div id = "date"></div> 
+   <div id = "temp"></div>
+   <div id = "content"></div> -->
+  </div>
+  <!-- </div> -->
+<script src="app.js" type="text/javascript"></script>
+
+</body>
+</html>
