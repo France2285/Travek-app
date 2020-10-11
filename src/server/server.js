@@ -1,11 +1,27 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
+const geonames_username = process.env.GEONAMES_USERNAME;
+console.log(geonames_username)
+
+const baseURL = 'http://api.geonames.org/searchJSON?maxRows=1&username=' + geonames_username + '&name=';
+
+
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
+
 
 // Require Express to run server and routes
 const express = require("express");
 
+
+// to be able to use fetch on from the server
+const fetch = require('node-fetch');
+
+
 // Start up an instance of app
 const app = express();
+
 
 /* Middleware*/
 const bodyParser = require("body-parser");
@@ -44,3 +60,66 @@ app.post('/add', function(req, res){
     projectData.userResponse = data.userResponse;
     res.send('Data Added!');
 })
+
+app.post('/getgeonames', function(req, res){
+    const formData = req.body;
+    console.log('data received!');
+    console.log(formData);
+
+    //calling the api
+    console.log('calling api')
+    console.log(baseURL + encodeURIComponent(formData.place))
+    
+    getData(baseURL + encodeURIComponent(formData.place)) //encodeURIComponent()
+    .then(function(data){
+        console.log(data)
+        res.send(data);
+      })
+})
+
+app.post('/getweather', function(req, res){
+    const formData = req.body;
+    console.log('data received!');
+    console.log(formData);
+
+    //calling the api
+    console.log('calling api')
+    console.log(baseURL + encodeURIComponent(formData.place))
+    
+    getData(baseURL + encodeURIComponent(formData.place)) //encodeURIComponent()
+    .then(function(data){
+        console.log(data)
+        res.send(data);
+      })
+})
+
+//GET ROUTE
+const getData = async (url='') =>{ 
+    let allData = ''
+    const request = await fetch(url);
+    try {
+        allData = await request.json()
+    }
+    catch(error) {
+        console.log("error", error);
+        }
+    return allData;
+}
+
+//POST ROUTE
+const postData = async ( url = '', data = {}) => {
+      const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),        
+      });
+      try {
+        const newData = await response.json();
+        return newData
+      }catch(error) {
+        console.log("error", error);
+      }
+  }
