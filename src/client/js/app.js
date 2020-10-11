@@ -1,3 +1,5 @@
+'http://api.geonames.org/searchJSON?name='+ destination +'&maxRows=1&username=france'
+
 /* Global Variables */
 const apiKey = '';
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&units=imperial&zip=';
@@ -8,9 +10,9 @@ document.getElementById("generate").addEventListener("click", performAction);
 
 
 function performAction(e){
-    zipCode = document.getElementById('zip').value;/*Take the zip code from HTML*/
-    if (isNaN(zipCode)){
-      alert ("Please enter a valid zip code")
+    destination = document.getElementById('place').value;/*Take the zip code from HTML*/
+    if (isNaN(destination)){
+      alert ("Please enter a valid destination")
       return
     }
     userAnswer = document.getElementById('feelings').value;/*Take the answer from the user*/
