@@ -2,10 +2,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const geonames_username = process.env.GEONAMES_USERNAME;
+const weatherAPI_KEY = process.env.weatherbit_KEY;
 console.log(geonames_username)
 
-const baseURL = 'http://api.geonames.org/searchJSON?maxRows=1&username=' + geonames_username + '&name=';
+let placeVal="";
 
+const baseURL = 'http://api.geonames.org/searchJSON?maxRows=1&username=' + geonames_username + '&name=';
+const baseURL2=  'https://api.weatherbit.io/v2.0/current?key=' + weatherAPI_KEY ;
 
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
@@ -55,12 +58,12 @@ app.get('/all', function(req, res){
 app.post('/add', function(req, res){
     const data = req.body;
     console.log(data);
-    projectData.temperature = data.temperature;
+    projectData.place = data.place;
     projectData.date = data.date;
-    projectData.userResponse = data.userResponse;
     res.send('Data Added!');
 })
 
+//POST FOR GEONAMES
 app.post('/getgeonames', function(req, res){
     const formData = req.body;
     console.log('data received!');
@@ -77,16 +80,17 @@ app.post('/getgeonames', function(req, res){
       })
 })
 
-app.post('/getweather', function(req, res){
+//POST FOR WEATHERBIT
+app.post('/getweatherbit', function(req, res){
     const formData = req.body;
     console.log('data received!');
     console.log(formData);
 
     //calling the api
     console.log('calling api')
-    console.log(baseURL + encodeURIComponent(formData.place))
+    console.log(baseURL2 + '&lat=' +encodeURIComponent(formData.lat) + '&lon=' +encodeURIComponent(formData.lon))
     
-    getData(baseURL + encodeURIComponent(formData.place)) //encodeURIComponent()
+    getData(baseURL2 + '&lat=' +encodeURIComponent(formData.lat) + '&lon=' +encodeURIComponent(formData.lon)) //encodeURIComponent()
     .then(function(data){
         console.log(data)
         res.send(data);
