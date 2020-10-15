@@ -24,8 +24,8 @@ function performAction(e){
       return
     }
     
-    dateVal = document.getElementById('start').value;/*Take the answer from the user*/
-console.log(dateVal)
+  /*   dateVal = document.getElementById('start').value;
+console.log(dateVal) */
 
     postData('http://localhost:3000/getgeonames', {place: placeVal})
     .then(function(data){
@@ -48,6 +48,15 @@ console.log(dateVal)
         humidity = data1.data[0].rh;
         console.log(weatherDescription)
         console.log(humidity)
+
+        //post...
+        /*.then(function(data1){
+          const nbDays = getNbDaysBeforeTrip()
+          document.getElementById('div id to write').innerHTML = nbDays;
+
+        })
+        */
+
       })
   })
 }
@@ -87,6 +96,19 @@ const postData = async ( url = '', data = {}) => {
       console.log("error", error);
     }
 }
+//Create a countdown
+function getNbDaysBeforeTrip(){
+  let dateVal = new Date(document.getElementById("start").value);
+  let current_date = new Date();
+  let dateTxt = current_date.getFullYear()+'-'+(current_date.getMonth()+1)+'-'+current_date.getDate();
+  
+  let Difference_In_Time = dateVal.getTime() - current_date.getTime(); 
+  let Difference_In_Days = Math.trunc(Difference_In_Time / (1000 * 3600 * 24)); 
 
- 
+  /*console.log(dateVal)
+  console.log(dateTxt)
+  console.log(Difference_In_Days)*/
+  return Difference_In_Days
+}
+
 export {performAction}
