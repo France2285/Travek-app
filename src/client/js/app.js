@@ -9,7 +9,15 @@ let countryName = '';
 let lng = 0;
 let lat = 0;
 let weatherDescription = '';
-let humidity = "";
+let maxtemp = "";
+let mintemp = "";
+let pixa_image = '';
+
+let placeTrip = document.getElementById ("placeGenerate");
+let dateTrip = document.getElementById ("dateGenerate");
+let imgContent = document.getElementById ("imageReceived");
+let weatherContent = document.getElementById ("entryHolder");
+
 
 /*Event listener*/
 document.getElementById("generate").addEventListener("click", performAction);
@@ -17,16 +25,17 @@ document.getElementById("generate").addEventListener("click", performAction);
 
 function performAction(e){
   
-  placeVal = document.getElementById('place').value;/*Take the place int the HTML*/
+  placeVal = document.getElementById('place').value;
     console.log(placeVal)
     if (placeVal == null){
       alert ("Please enter a valid destination")
       return
     }
-    
-  /*   dateVal = document.getElementById('start').value;
-console.log(dateVal) */
-
+  dateVal = document.getElementById("start").value;
+    if (dateVal == null){
+      alert ("please enter a valid date dd/mm/yyyy")
+      return
+      }
     postData('http://localhost:3000/getgeonames', {place: placeVal})
     .then(function(data){
       console.log(data)
@@ -34,28 +43,57 @@ console.log(dateVal) */
       lng = data.geonames[0].lon;
       lat = data.geonames[0].lat;
       countryName = data.geonames[0].countryName;
-     /* 
-      console.log(lng)
-      console.log(lat)
-      console.log(countryName)
+      placeTrip.innerHTML = "My trip To : " + placeVal;
+
+      /*
+      
+      si dateval > date daujourdhui alors changer l'ammee de dateval a lanne du jour - 1
+      sinon
       */
-      postData('http://localhost:3000/getweatherbit', {lon : data.geonames[0].lng, lat: data.geonames[0].lat })
+      let myDate = new Date(dateVal);
+      let current_date = new Date();
+
+      if(myDate.getDate() > current_date.getDate() + 16 || myDate.getDate() < current_date.getDate()){         
+        alert("Error : you must specify a date within 16 days from the current date")
+        return
+      }
+
+      postData('http://localhost:3000/getweatherbit', {lon : data.geonames[0].lng, lat: data.geonames[0].lat, date : dateVal })
       .then(function(data1){
         console.log(data1)
         
+        var i = 0;
+        while(data1.data[i].valid_date != dateVal){
+          console.log(i)
+          console.log(data1.data[i].valid_date)
+          console.log(dateVal)
+          i++;
+        }
         
-        weatherDescription = data1.data[0].weather.description;
-        humidity = data1.data[0].rh;
-        console.log(weatherDescription)
-        console.log(humidity)
+        weatherDescription = data1.data[i].weather.description;
+        maxtemp = data1.data[i].max_temp;
+        mintemp = data1.data[i].min_temp;
 
-        //post...
-        /*.then(function(data1){
-          const nbDays = getNbDaysBeforeTrip()
-          document.getElementById('div id to write').innerHTML = nbDays;
+        console.log(weatherDescription)
+        console.log(maxtemp)
+        console.log(mintemp)
+
+        weatherContent.innerHTML = "Forecast weather for then is : " + weatherDescription + " and the temperature will be between " + mintemp + " °C and "+ maxtemp +" °C";
+
+        postData('http://localhost:3000/getpixaBay', {place : placeVal})
+          .then(function(data2){
+            console.log(data2)
+            
+            pixa_image = data2.hits[0].webformatURL;
+            console.log(pixa_image)
+
+            
+            imgContent.innerHTML = '<img src =\"'+ pixa_image+'">';
+            let nbDays = getNbDaysBeforeTrip()
+            dateTrip.innerHTML = "Departing in "+ nbDays + " days";
 
         })
-        */
+        
 
       })
   })

@@ -3,12 +3,14 @@ dotenv.config();
 
 const geonames_username = process.env.GEONAMES_USERNAME;
 const weatherAPI_KEY = process.env.weatherbit_KEY;
+const pixaBay_API = process.env.API_KEY_PIXABAY;
 console.log(geonames_username)
 
 let placeVal="";
 
 const baseURL = 'http://api.geonames.org/searchJSON?maxRows=1&username=' + geonames_username + '&name=';
-const baseURL2=  'https://api.weatherbit.io/v2.0/current?key=' + weatherAPI_KEY ;
+const baseURL2 = 'https://api.weatherbit.io/v2.0/forecast/daily?key=' + weatherAPI_KEY;
+const baseURL3 =  'https://pixabay.com/api/?image_type=photo&category=Travel&editors_choice=true&key='+ pixaBay_API +'&q=' ;
 
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
@@ -89,13 +91,30 @@ app.post('/getweatherbit', function(req, res){
     //calling the api
     console.log('calling api')
     console.log(baseURL2 + '&lat=' +encodeURIComponent(formData.lat) + '&lon=' +encodeURIComponent(formData.lon))
-    
-    getData(baseURL2 + '&lat=' +encodeURIComponent(formData.lat) + '&lon=' +encodeURIComponent(formData.lon)) //encodeURIComponent()
+    getData(baseURL2 + '&lat=' +encodeURIComponent(formData.lat) + '&lon=' +encodeURIComponent(formData.lon))
+
     .then(function(data){
         console.log(data)
         res.send(data);
       })
 })
+
+ //POST FOR PIXABAY
+app.post('/getpixaBay', function(req, res){
+    const formData = req.body;
+    console.log('data received!');
+    console.log(formData);
+
+    //calling the api
+    console.log('calling api')
+    console.log(baseURL3 + encodeURIComponent(formData.place))
+
+    getData(baseURL3 +encodeURIComponent(formData.place)) //encodeURIComponent()
+    .then(function(data){
+        console.log(data)
+        res.send(data);
+        })
+}) 
 
 //GET ROUTE
 const getData = async (url='') =>{ 
