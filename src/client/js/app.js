@@ -4,38 +4,42 @@ let projectData = [];
 /* Global Variables */
 let placeVal = '';
 let dateVal = '';
-
 let countryName = '';
 let lng = 0;
 let lat = 0;
 let weatherDescription = '';
 let maxtemp = "";
 let mintemp = "";
+let icon = "";
 let pixa_image = '';
 
+//Take all element ID to work on it
 let placeTrip = document.getElementById ("placeGenerate");
 let dateTrip = document.getElementById ("dateGenerate");
 let imgContent = document.getElementById ("imageReceived");
 let weatherContent = document.getElementById ("entryHolder");
-
 
 /*Event listener*/
 document.getElementById("generate").addEventListener("click", performAction);
 
 
 function performAction(e){
-  
+// Take the informations about the input place
   placeVal = document.getElementById('place').value;
     console.log(placeVal)
     if (placeVal == null){
       alert ("Please enter a valid destination")
       return
     }
+
+// Take the informations about the input date
   dateVal = document.getElementById("start").value;
     if (dateVal == null){
       alert ("please enter a valid date dd/mm/yyyy")
       return
       }
+
+//Send the information to Geonames URL and take the information needed
     postData('http://localhost:3000/getgeonames', {place: placeVal})
     .then(function(data){
       console.log(data)
@@ -45,11 +49,7 @@ function performAction(e){
       countryName = data.geonames[0].countryName;
       placeTrip.innerHTML = "My trip To : " + placeVal;
 
-      /*
-      
-      si dateval > date daujourdhui alors changer l'ammee de dateval a lanne du jour - 1
-      sinon
-      */
+//Create the data format and check what the client is wrtiting
       let myDate = new Date(dateVal);
       let current_date = new Date();
 
@@ -58,51 +58,37 @@ function performAction(e){
         return
       }
 
+//Send the data to weatherbit and take all the information need: longitude, latiture and the date
       postData('http://localhost:3000/getweatherbit', {lon : data.geonames[0].lng, lat: data.geonames[0].lat, date : dateVal })
       .then(function(data1){
         console.log(data1)
-        
+        //Choose the right date on the data
         var i = 0;
         while(data1.data[i].valid_date != dateVal){
-          console.log(i)
-          console.log(data1.data[i].valid_date)
-          console.log(dateVal)
           i++;
         }
-        
+
+        // Take the information we need on the data
         weatherDescription = data1.data[i].weather.description;
         maxtemp = data1.data[i].max_temp;
         mintemp = data1.data[i].min_temp;
 
-        console.log(weatherDescription)
-        console.log(maxtemp)
-        console.log(mintemp)
+        // Write on the HTML file
+        weatherContent.innerHTML = "Forecast weather for then is : " + weatherDescription + " and the temperature will be between " + mintemp + " °C and "+ maxtemp +" °C" + icon;
 
-        weatherContent.innerHTML = "Forecast weather for then is : " + weatherDescription + " and the temperature will be between " + mintemp + " °C and "+ maxtemp +" °C";
-
+        //Send the data form pixabay to find a picture
         postData('http://localhost:3000/getpixaBay', {place : placeVal})
           .then(function(data2){
-            console.log(data2)
-            
             pixa_image = data2.hits[0].webformatURL;
-            console.log(pixa_image)
 
-            
+            //Write on HTML file what we need to show t the client
             imgContent.innerHTML = '<img src =\"'+ pixa_image+'">';
             let nbDays = getNbDaysBeforeTrip()
             dateTrip.innerHTML = "Departing in "+ nbDays + " days";
-
         })
-        
-
       })
   })
 }
-
-    
-// Create a new date instance dynamically with JS
-/* let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear(); */
 
 //GET ROUTE
 const getData = async (url='') =>{ 
@@ -134,6 +120,7 @@ const postData = async ( url = '', data = {}) => {
       console.log("error", error);
     }
 }
+
 //Create a countdown
 function getNbDaysBeforeTrip(){
   let dateVal = new Date(document.getElementById("start").value);
@@ -142,10 +129,6 @@ function getNbDaysBeforeTrip(){
   
   let Difference_In_Time = dateVal.getTime() - current_date.getTime(); 
   let Difference_In_Days = Math.trunc(Difference_In_Time / (1000 * 3600 * 24)); 
-
-  /*console.log(dateVal)
-  console.log(dateTxt)
-  console.log(Difference_In_Days)*/
   return Difference_In_Days
 }
 
