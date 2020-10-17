@@ -18,16 +18,15 @@ let placeTrip = document.getElementById ("placeGenerate");
 let dateTrip = document.getElementById ("dateGenerate");
 let imgContent = document.getElementById ("imageReceived");
 let weatherContent = document.getElementById ("entryHolder");
+let iconContent = document.getElementById ("weather-icon");
 
-/*Event listener*/
-document.getElementById("generate").addEventListener("click", performAction);
 
 
 function performAction(e){
 // Take the informations about the input place
   placeVal = document.getElementById('place').value;
     console.log(placeVal)
-    if (placeVal == null){
+    if (placeVal == ""){
       alert ("Please enter a valid destination")
       return
     }
@@ -75,6 +74,10 @@ function performAction(e){
 
         // Write on the HTML file
         weatherContent.innerHTML = "Forecast weather for then is : " + weatherDescription + " and the temperature will be between " + mintemp + " °C and "+ maxtemp +" °C" + icon;
+
+        //let var1 = document.querySelector("weather-icon");
+        let weatherIcon = data1.data[i].weather.icon;
+        iconContent.innerHTML = '<img src="https://www.weatherbit.io/static/img/icons/' + weatherIcon + '.png" alt="Icon depicting current weather.">';
 
         //Send the data form pixabay to find a picture
         postData('http://localhost:3000/getpixaBay', {place : placeVal})

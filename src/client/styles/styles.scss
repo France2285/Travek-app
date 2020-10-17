@@ -10,9 +10,11 @@ body{
     display: block;
     margin-top: auto;
     margin-bottom: auto;
-    
 }
 
+#weather-icon.img{
+    size: 60px;
+}
 img{
     width: 300px;
     text-align: center;
