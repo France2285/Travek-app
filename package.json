@@ -26,6 +26,7 @@
     "js": "^0.1.0",
     "meaning-cloud": "^1.1.10",
     "node-fetch": "^2.6.1",
+    "supertest": "^5.0.0",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
   },

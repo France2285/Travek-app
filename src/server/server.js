@@ -13,7 +13,7 @@ const baseURL2 = 'https://api.weatherbit.io/v2.0/forecast/daily?key=' + weatherA
 const baseURL3 =  'https://pixabay.com/api/?image_type=photo&category=Travel&editors_choice=true&key='+ pixaBay_API +'&q=' ;
 
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+let projectData = {};
 
 
 // Require Express to run server and routes
@@ -50,10 +50,9 @@ const server = app.listen(port, () => {console.log(`running on localhost: ${port
 
 
 //Server routes
-app.get('/all', function(req, res){
-    console.log('Route /all called!')
-    console.log(projectData)
-    res.send(projectData)
+app.get('/', function(req, res){
+    console.log('Route / called!');
+    res.sendFile('dist.html');
 })
 
 
@@ -68,7 +67,7 @@ app.post('/add', function(req, res){
 //POST FOR GEONAMES
 app.post('/getgeonames', function(req, res){
     const formData = req.body;
-    console.log('data received!');
+    console.log('data received geonames!');
     console.log(formData);
 
     //calling the api
