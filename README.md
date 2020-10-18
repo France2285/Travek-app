@@ -8,7 +8,7 @@ Install everything :
 - `npm install`
 
 ### Sign up fot API key
-http://www.geonames.org/export/web-services.html
+http://www.geonames.org/export/web-services.html,
 https://www.weatherbit.io/account/create
 https://pixabay.com/api/docs/
 

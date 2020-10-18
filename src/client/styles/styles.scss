@@ -12,6 +12,10 @@ body{
     margin-bottom: auto;
 }
 
+button:hover{
+    background-color: rgb(208, 232, 227)
+} 
+
 #weather-icon.img{
     size: 60px;
 }
