@@ -13,7 +13,9 @@ body{
 }
 
 button:hover{
-    background-color: rgb(208, 232, 227)
+    background-color: rgb(199, 250, 239);
+    color:rgb(45, 79, 71);
+    border-radius: 10px;
 } 
 
 #weather-icon.img{
@@ -128,6 +130,7 @@ button{
     border: none;
     box-shadow: 2px 4px 5px #444;
     margin: 20px;
+    border-radius: 10px;
 }
 h1{
     font-size: 36px;
