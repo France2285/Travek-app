@@ -1,7 +1,4 @@
-function checkCity(myText) {
-    //event.preventDefault()
-   // check what text was put into the form field
-    //let myText = document.getElementById('name').value
+function checkCity(placeVal) {
     if (placeVal == ""){
         alert ("Please enter a valid destination")
         return false
@@ -10,7 +7,7 @@ function checkCity(myText) {
     }
 }
 
-function checkDate(myText) {
+function checkDate(dateVal) {
       if (dateVal == null){
         alert ("please enter a valid date dd/mm/yyyy")
         return false

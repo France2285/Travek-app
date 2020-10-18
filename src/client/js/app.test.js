@@ -1,5 +1,5 @@
-import { checkCity } from "../src/client/js/formHandler"
-import { checkDate } from "../src/client/js/formHandler"
+import { checkCity } from "./formHandler"
+import { checkDate } from "./formHandler"
 
 describe("Testing the submit functionality", () => {
     // The test() function has two arguments - a string description, and an actual test as a callback function.  

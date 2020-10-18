@@ -38,28 +38,7 @@ img{
     grid-template-columns: 400px auto;
     grid-gap: 10px;
 }
-/*#app{
-    display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  
-    height:100vh;
-    background: rgb(208, 232, 227);
-    color: #0e0c03;
-    justify-content:left;
-    grid-gap: 1em;
-    font-size: 60px;
-    font-family: 'Architects Daughter', sans-serif;
-}*/
 
-/*.chooseTrip{
-    display: inline-block;
-    grid-template-columns: minmax(auto); 
-}*/
-
-/*#myTrip{
-    
-//     display: inline-block;
-// }*/
 .inline{
     display: inline-block;
 }
@@ -67,39 +46,11 @@ img{
     background: rgba(59, 74, 107, .4);
 }
 
-/*.resumTrip{
-    display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  
-    height:100vh;
-    background: rgb(208, 232, 227);
-    color: #0e0c03;
-    justify-content: center;
-    grid-gap: 1em;
-    font-size: 60px;
-    font-family: 'Architects Daughter', sans-serif;
-}*/
-
-/*#entryHolder{
-}*/
-
-/*#date{
-}*/
-
-/*#temp{
-}*/
-
-/*#content{
-}*/
-
 .holderheadline {
     text-align: center;;
     font-size: 60px;
     margin:20px;
 }
-
-/*.title{
-}*/
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
 label{
@@ -150,18 +101,18 @@ button:focus {
     outline: none;
 }
 /* Style for Placeholder Text*/
-::placeholder { /* Firefox, Chrome, Opera */ 
+::placeholder { 
     color: #3a8085; 
     font-family: 'Piazzolla', serif;
 
 } 
   
-:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+:-ms-input-placeholder { 
     color: #3a8085; 
     font-family: 'Piazzolla', serif;
 } 
   
-::-ms-input-placeholder { /* Microsoft Edge */ 
+::-ms-input-placeholder { 
     color: #3a8085; 
     font-family: 'Piazzolla', serif;
 }
